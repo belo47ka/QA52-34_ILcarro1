@@ -40,6 +40,8 @@ public class LoginTests extends AppManager {
         loginpage.typeLoginForm(user);
         loginpage.clickLoginbtnYalla();
         softAssert.assertFalse(loginpage.isBtnYallaEnabled(), "validate isBtnYallaEnabled");
+        softAssert.assertTrue(loginpage.isTextInErrorPresent("Email is required"),
+                "validate message:Email is required");
     }
     @Test
     public void loginNegativePasswordFieldTest(){
