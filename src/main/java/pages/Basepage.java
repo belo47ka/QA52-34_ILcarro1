@@ -24,6 +24,7 @@ public abstract class Basepage {
         }
         return false;
     }
+
     public String closeAlert(){
         Alert alert = new WebDriverWait(driver,Duration.ofSeconds(5))
                 .until(ExpectedConditions.alertIsPresent());
