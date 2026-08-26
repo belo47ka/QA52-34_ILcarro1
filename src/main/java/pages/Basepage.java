@@ -6,12 +6,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
 
 public abstract class Basepage {
     static WebDriver driver;
+    public Logger logger = LoggerFactory.getLogger(Basepage.class);
 
     public void setDriver(WebDriver wd){driver=wd;}
 
@@ -19,8 +22,9 @@ public abstract class Basepage {
         try {return new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.textToBePresentInElement(element, text));}
         catch (RuntimeException e){
-            e.printStackTrace();
-            System.out.println("created exeption");
+//            e.printStackTrace();
+//            System.out.println("created exeption");
+            logger.error("create exeption",e);
         }
         return false;
     }

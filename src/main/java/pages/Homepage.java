@@ -18,12 +18,17 @@ public class Homepage extends Basepage{
     WebElement btnLogin;
     @FindBy(xpath = "//a[text()=' Sign up ']")
     WebElement btnSignUp;
+    @FindBy(xpath = "//*[@href='/let-car-work']")
+    WebElement btnLetTheCarWork;
 
     public void clickBtnLogin(){
         btnLogin.click();
     }
     public void clickBtnSighUp(){
         btnSignUp.click();
+    }
+    public void clickBtnLetTheCarWork(){
+        btnLetTheCarWork.click();
     }
 
 
