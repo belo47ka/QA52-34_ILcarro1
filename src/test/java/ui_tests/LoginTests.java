@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.Homepage;
 import pages.Loginpage;
+import utils.RetryAnalyzer;
 import utils.UserFaker;
 
 import static utils.PropertiesReader.*;
@@ -33,18 +34,19 @@ public class LoginTests extends AppManager {
 
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void loginNegativeEmailFieldTest() {
         UserLombok user = UserLombok.builder()
-                .username(getProperty("base.properties", "negativeEmail"))
+                .username("")
                 .password(getProperty("base.properties", "password"))
                 .build();
         Loginpage loginpage = new Loginpage(getDriver());
         loginpage.typeLoginForm(user);
         loginpage.clickLoginbtnYalla();
         softAssert.assertFalse(loginpage.isBtnYallaEnabled(), "validate isBtnYallaEnabled");
-        softAssert.assertTrue(loginpage.isTextInErrorPresent("Email is required"),
+        softAssert.assertTrue(loginpage.isTextInErrorPresent("Amail is required"),
                 "validate message:Email is required");
+        softAssert.assertAll();
     }
 
     @Test

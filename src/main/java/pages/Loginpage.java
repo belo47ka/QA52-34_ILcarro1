@@ -13,7 +13,7 @@ public class Loginpage extends Basepage{
         PageFactory.initElements(new AjaxElementLocatorFactory(driver,10),this);
 
     }
-    @FindBy(xpath = "//input[@id='email']")
+    @FindBy(xpath = "//*[@id='email']")
     WebElement inputEmail;
     @FindBy(css = "*[type='password']")
     WebElement inputPassword;
