@@ -42,6 +42,8 @@ public class LetTheCarWorkPage extends Basepage{
          WebElement location;
          @FindBy(id = "photos")
          WebElement inputImage;
+         @FindBy(xpath = "//*[@class='ng-star-inserted']")
+         WebElement wrongYear;
 
 //        public void typeAddCarForm(CarLombok carLombok){
 //            inputLocation.sendKeys(carLombok.getLocation());
@@ -60,6 +62,72 @@ public class LetTheCarWorkPage extends Basepage{
 //
 //
 //        }
+public void typeAddNewCarFormNull(CarLombok car) {
+
+    if (car.getLocation() != null) {
+
+        inputLocation.sendKeys(car.getLocation());
+
+    }
+
+    if (car.getManufacture() != null) {
+
+        inputManufacture.sendKeys(car.getManufacture());
+
+    }
+
+    if (car.getModel() != null) {
+
+        inputModel.sendKeys(car.getModel());
+
+    }
+
+    if (car.getYear() != null) {
+
+        inputYear.sendKeys(car.getYear());
+
+    }
+
+    if (car.getFuel() != null) {
+
+        selectFuel.sendKeys(car.getFuel().toString());
+
+    }
+
+    if (car.getSeats() != null) {
+
+        inputSeats.sendKeys(car.getSeats().toString());
+
+    }
+
+    if (car.getCarClass() != null) {
+
+        inputCarClass.sendKeys(car.getCarClass());
+
+    }
+
+    if (car.getCarRegistrationNumber() != null) {
+
+        inputCarRegistrationNumber.sendKeys(
+
+                car.getCarRegistrationNumber()
+
+        );
+
+    }
+
+    if (car.getPrice() != null) {
+
+        inputPrice.sendKeys(car.getPrice().toString());
+
+    }
+
+    if (car.getAbout() != null) {
+
+        inputAbout.sendKeys(car.getAbout());
+    }
+}
+
 
        public void typeAddNewCarForm(CarLombok car){
            inputLocation.sendKeys(car.getLocation());
@@ -74,6 +142,25 @@ public class LetTheCarWorkPage extends Basepage{
            inputAbout.sendKeys(car.getAbout());
 
        }
+
+
+     public void clickSllFields(){
+           inputLocation.click();
+           inputManufacture.click();
+           inputModel.click();
+           inputYear.click();
+           selectFuel.click();
+           inputSeats.click();
+           inputCarRegistrationNumber.click();
+           inputPrice.click();
+           inputAbout.click();
+
+     }
+     public boolean isWrongYearDisplayed(){
+    return wrongYear.isDisplayed();
+
+
+     }
 
     private void chooseFuel(Fuel fuel) {
         selectFuel.click();

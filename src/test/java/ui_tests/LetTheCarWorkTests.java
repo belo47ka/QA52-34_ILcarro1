@@ -5,12 +5,14 @@ import dto.UserLombok;
 import manager.AppManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.Homepage;
 import pages.LetTheCarWorkPage;
 import pages.Loginpage;
 import pages.PopUpPage;
+import utils.enums.Fuel;
 import utils.enums.HeaderMenu;
 import static utils.CarFactory.*;
 
@@ -52,6 +54,97 @@ public class LetTheCarWorkTests extends AppManager {
 //        //letTheCarWorkPage.clickBtnSubmitWithJS();
 //
 //    }
+    @DataProvider(name = "wrongYear")
+    public Object [][] wrongYear(){
+        return new Object[][]{
+                {"0"},{"99"},{"123"},{"100000000000000000"},{"-122"},{"abs"},{"1234ere33"},
+                {"123#er!@#$"},{"wrongYear"},{"WRONGYEAR"},{"-122Wrong#"}
+        };
+    }
+    @Test(dataProvider = "wrongYear")
+    public void WrongYEarNegativeTest(String wrongYear){
+        CarLombok car = CarLombok.builder()
+                .location("Haifa")
+                .manufacture("Toyota")
+                .model("Corolla")
+                .year(wrongYear)
+                .fuel(Fuel.DIESEL)
+                .seats(5)
+                .carClass("C")
+                .carRegistrationNumber("12345")
+                .price(1.0)
+                .about("privet")
+                .build();
+        letTheCarWorkPage.typeAddNewCarForm(car);
+        letTheCarWorkPage.clickBtnSubmitWithJS();
+        Assert.assertTrue(letTheCarWorkPage.isWrongYearDisplayed());
+    }
+    @Test
+    public void ClickOnlySubmitNegative(){
+        letTheCarWorkPage.clickBtnSubmitWithJS();
+        Assert.assertTrue(new PopUpPage(getDriver())
+                .isTextInPopUpMessagePresent("Car adding failed"));
+    }
+    @Test
+    public void WrongYearFieldNegative(){
+        CarLombok car = CarLombok.builder()
+                .location("Haifa")
+                .manufacture("Toyota")
+                .model("Corolla")
+                .year("2022000000000000000000000000000")
+                .fuel(Fuel.DIESEL)
+                .seats(5)
+                .carClass("C")
+                .carRegistrationNumber("12345")
+                .price(1.0)
+                .about("privet")
+                .build();
+        letTheCarWorkPage.typeAddNewCarForm(car);
+        letTheCarWorkPage.clickBtnSubmitWithJS();
+    }
+    @Test
+    public void OneFieldWithNullNegative(){
+        CarLombok car = CarLombok.builder()
+                .location("Haifa")
+                .manufacture("Toyota")
+                .model("Corolla")
+                .year("2022")
+                .fuel(null)
+                .seats(5)
+                .carClass("C")
+                .carRegistrationNumber("12345")
+                .price(1.0)
+                .about("privet")
+                .build();
+        letTheCarWorkPage.typeAddNewCarFormNull(car);
+        letTheCarWorkPage.clickBtnSubmitWithJS();
+    }
+    @Test
+    public void OneFieldBlankNegative(){
+        CarLombok car = CarLombok.builder()
+                .location("Haifa")
+                .manufacture("Toyota")
+                .model("Corolla")
+                .year("2022")
+                .fuel(Fuel.DIESEL)
+                .seats(5)
+                .carClass("")
+                .carRegistrationNumber("12345")
+                .price(1.0)
+                .about("privet")
+                .build();
+        letTheCarWorkPage.typeAddNewCarForm(car);
+        letTheCarWorkPage.clickBtnSubmitWithJS();
+    }
+    @Test
+    public void ClickAllFieldsButtonSubmitNegative(){
+        letTheCarWorkPage.clickSllFields();
+        letTheCarWorkPage.clickBtnSubmitWithJS();
+        Assert.assertTrue(new PopUpPage(getDriver())
+                .isTextInPopUpMessagePresent("Car adding failed"));
+
+
+    }
     @Test
     public void addNewCarPositiveTest(){
         CarLombok car = positiveCar();

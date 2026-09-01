@@ -5,7 +5,8 @@ public enum Fuel {
     PETROL("//option[@value='Petrol']"),
     HYBRID("//option[@value='Hybrid']"),
     ELECTRIC("//option[@value='Electric']"),
-    GAS("//option[@value='Gas']");
+    GAS("//option[@value='Gas']"),
+    NegativeTest("//*[@id='fuel']");
 
     private String locator;
 
