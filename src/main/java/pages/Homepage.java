@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 
 import static utils.PropertiesReader.*;
 public class Homepage extends Basepage{
+
     public Homepage(WebDriver driver){
         setDriver(driver);
         //driver.get("https://ilcarro.web.app/search");
@@ -29,6 +31,18 @@ public class Homepage extends Basepage{
     WebElement inputDates;
     @FindBy(xpath = "//button[@type='submit']")
     WebElement btnYallaSearch;
+    @FindBy(xpath = "//*[@class='no-cars-label ng-star-inserted']")
+    WebElement noAvailableCarsMessage;
+    @FindBy(xpath = "(//div[@class='error'])[2]")
+    WebElement errorMesWrongDate;
+
+
+    public String noAvailableCarsMethod(){
+        return noAvailableCarsMessage.getText();
+    }
+    public String errorMesWrongDate(){
+        return errorMesWrongDate.getText();
+    }
 
     public void clickBtnLogin(){
         btnLogin.click();
@@ -51,6 +65,13 @@ public class Homepage extends Basepage{
         System.out.println(dates);
         inputDates.sendKeys(dates);
     }
+    public void submitSearchWithJS(){
+            JavascriptExecutor js = (JavascriptExecutor)driver;
+            js.executeScript("document.querySelector(\"button[type='submit']\")" +
+                    ".removeAttribute('disabled')");
+            btnYallaSearch.click();
+        }
+    }
 
 
-}
+
