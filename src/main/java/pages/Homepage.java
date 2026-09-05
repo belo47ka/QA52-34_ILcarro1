@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
+import java.time.LocalDate;
+
 import static utils.PropertiesReader.*;
 public class Homepage extends Basepage{
     public Homepage(WebDriver driver){
@@ -20,6 +23,12 @@ public class Homepage extends Basepage{
     WebElement btnSignUp;
     @FindBy(xpath = "//*[@href='/let-car-work']")
     WebElement btnLetTheCarWork;
+    @FindBy(id="city")
+    WebElement inputCity;
+    @FindBy(id="dates")
+    WebElement inputDates;
+    @FindBy(xpath = "//button[@type='submit']")
+    WebElement btnYallaSearch;
 
     public void clickBtnLogin(){
         btnLogin.click();
@@ -29,6 +38,18 @@ public class Homepage extends Basepage{
     }
     public void clickBtnLetTheCarWork(){
         btnLetTheCarWork.click();
+    }
+    public void typeSearchForm(String city, LocalDate startDate,LocalDate endDAte){
+        inputCity.sendKeys(city);
+        System.out.println(startDate);
+        System.out.println(endDAte);
+        // 2026-09-05
+        System.out.println(startDate.getMonthValue());
+        System.out.println(startDate.getDayOfMonth());
+        String dates = startDate.getMonthValue() +"/"+ startDate.getDayOfMonth()+"/"+startDate.getYear()+" - "
+                +endDAte.getMonthValue()+"/"+endDAte.getDayOfMonth()+"/"+endDAte.getYear();
+        System.out.println(dates);
+        inputDates.sendKeys(dates);
     }
 
 

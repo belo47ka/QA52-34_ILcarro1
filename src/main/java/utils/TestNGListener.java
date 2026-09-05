@@ -1,13 +1,19 @@
 package utils;
 
+import manager.AppManager;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
 
 public class TestNGListener implements ITestListener {
     Logger logger = LoggerFactory.getLogger(TestNGListener.class);
+    private WebDriver driver;
+
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
@@ -24,6 +30,8 @@ public class TestNGListener implements ITestListener {
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
         logger.warn("Test failed-->"+result.getName()+" status -->"+ result.getStatus());
+        this.driver= ((AppManager)result.getInstance()).getDriver();
+        TakeScreenshot.takeScreenShot((TakesScreenshot) driver);
     }
 
     @Override
@@ -55,4 +63,5 @@ public class TestNGListener implements ITestListener {
         ITestListener.super.onFinish(context);
         logger.info(context.getName()+"test finish on"+context.getEndDate());
     }
+
 }

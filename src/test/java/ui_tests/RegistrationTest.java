@@ -7,15 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.Homepage;
 import pages.PopUpPage;
 import pages.RegistrationPage;
+import utils.TestNGListener;
+
+
 
 //import java.util.logging.Logger;
-
 import static utils.UserFaker.*;
-
+@Listeners(TestNGListener.class)
 public class RegistrationTest extends AppManager {
     RegistrationPage registrationPage;
      //Logger logger = LoggerFactory.getLogger(RegistrationTest.class);
@@ -60,6 +63,16 @@ public class RegistrationTest extends AppManager {
         registrationPage.clickCheckBoxWithActions();
         registrationPage.clickBtnYalla();
         Assert.assertTrue(new PopUpPage(getDriver()).isTextInPopUpMessagePresent("You are logged in success"));
+
+    }
+    @Test(dataProvider = "dataProviderForRegistrationWrongPasswordOrEmail",
+            dataProviderClass = UserDataProvider.class)
+    public void registrationNegativeWrongPasswordOrEmailTest1(UserLombok user){
+        registrationPage.typeRegistrationForm(user);
+        registrationPage.clickCheckBoxWithActions();
+        registrationPage.clickBtnYalla();
+        Assert.assertTrue(registrationPage.isTextInErrorPresent("Password must contain 1 uppercase letter, " +
+                "1 lowercase letter, 1 number and one special symbol of [@$#^&*!]"));
 
     }
 
