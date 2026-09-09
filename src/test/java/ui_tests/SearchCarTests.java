@@ -48,5 +48,28 @@ public class SearchCarTests extends AppManager {
         homepage.submitSearchWithJS();
         Assert.assertTrue(homepage.errorMesWrongDate().contains("Second date must be after first date"));
     }
+    @Test
+    public void searchCarPositiveTests1(){
+        String city = "Haifa";
+        LocalDate startDate = LocalDate.now().plusDays(2);
+        LocalDate endDate = LocalDate.now().plusDays(8);
+        homepage.typeSearchForm(city,startDate,endDate);
+        homepage.submitSearchWithJS();
+        Assert.assertTrue(homepage.isUrlContainsText("results"));
+
+
+    }
+    @Test
+    public void searchCarPositiveTestsWithCalendar(){
+        String city = "Haifa";
+        LocalDate startDate = LocalDate.now().plusDays(2);
+        LocalDate endDate = LocalDate.now().plusDays(8);
+        homepage.typeSearchFormWithCalendar(city,startDate,endDate);
+        homepage.submitSearchWithJS();
+        Assert.assertTrue(homepage.isUrlContainsText("results"));
+
+
+    }
+
 
 }

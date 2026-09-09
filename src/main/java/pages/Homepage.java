@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,6 +36,8 @@ public class Homepage extends Basepage{
     WebElement noAvailableCarsMessage;
     @FindBy(xpath = "(//div[@class='error'])[2]")
     WebElement errorMesWrongDate;
+    @FindBy(xpath = "//button[@aria-label='Choose month and year']")
+    WebElement btnYearCalendar;
 
 
     public String noAvailableCarsMethod(){
@@ -65,6 +68,36 @@ public class Homepage extends Basepage{
         System.out.println(dates);
         inputDates.sendKeys(dates);
     }
+    public void typeSearchFormWithCalendar(String city, LocalDate startDate,LocalDate endDAte){
+        inputCity.sendKeys(city);
+        inputDates.click();
+        typeCalendar(startDate);
+        typeCalendar(endDAte);
+
+    }
+    private void typeCalendar(LocalDate date){
+        btnYearCalendar.click();
+        //System.out.println(date.getYear());
+        String year = Integer.toString(date.getYear());
+        WebElement btnYear = driver.findElement(By.xpath("//td[@aria-label='"+year+"']"));
+        btnYear.click();
+        //td[@aria-label="November 2026"] //td[@aria-label='"+month+" " +year+"']
+        //System.out.println(date.getMonth());
+        String month = createMonth(date.getMonth().toString());
+        System.out.println(month);
+        WebElement btnMonth = driver.findElement(By.xpath("//td[@aria-label=\"September 2026\"]"));
+        btnMonth.click();
+        System.out.println(date.getDayOfMonth());
+        String day = String.valueOf(date.getDayOfMonth());
+        WebElement btnDay = driver.findElement(By.xpath("//td[@aria-label='" + month + " " + day + ", " + year + "']"));
+        btnDay.click();
+
+    }
+    //SEPTEMBER-.>september
+    private String createMonth(String month){
+        return new StringBuilder().append(month.substring(0,1).toUpperCase())
+                .append(month.substring(1).toLowerCase()).toString();
+    }
     public void submitSearchWithJS(){
             JavascriptExecutor js = (JavascriptExecutor)driver;
             js.executeScript("document.querySelector(\"button[type='submit']\")" +
@@ -72,6 +105,7 @@ public class Homepage extends Basepage{
             btnYallaSearch.click();
         }
     }
+
 
 
 
