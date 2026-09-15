@@ -22,7 +22,7 @@ public class LetTheCarWorkTests extends AppManager {
     Loginpage loginpage;
     LetTheCarWorkPage letTheCarWorkPage;
     SoftAssert softAssert = new SoftAssert();
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void LoginAndOpenPage(){
         logger.info("Start Registration Test");
         new Homepage(getDriver()).clickBtnLogin();
@@ -145,7 +145,7 @@ public class LetTheCarWorkTests extends AppManager {
 
 
     }
-    @Test
+    @Test(groups = {"smoke","regress","car","positive"})
     public void addNewCarPositiveTest(){
         CarLombok car = positiveCar();
         System.out.println(car);

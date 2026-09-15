@@ -18,13 +18,13 @@ public class LoginTests extends AppManager {
     Loginpage loginpage;
     SoftAssert softAssert = new SoftAssert();
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void gotoLoginPage() {
         new Homepage(getDriver()).clickBtnLogin();
         loginpage = new Loginpage(getDriver());
     }
 
-    @Test
+    @Test(groups = {"smoke","regress","user","positive"})
     public void loginPositiveTestWithFakerTest() {
         UserLombok user = UserFaker.positiveUser();
         System.out.println(user);

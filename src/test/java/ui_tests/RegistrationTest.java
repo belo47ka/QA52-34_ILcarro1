@@ -22,7 +22,7 @@ import static utils.UserFaker.*;
 public class RegistrationTest extends AppManager {
     RegistrationPage registrationPage;
      //Logger logger = LoggerFactory.getLogger(RegistrationTest.class);
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void goToRegistrationPage(){
         logger.info("Start Registration Test");
         new Homepage(getDriver()).clickBtnSighUp();
@@ -30,7 +30,7 @@ public class RegistrationTest extends AppManager {
 
     }
 
-    @Test
+    @Test(groups = {"smoke","regress","user","positive"})
     public void registrationPositiveTest(){
         UserLombok user = positiveUser();
         registrationPage.typeRegistrationForm(user);
