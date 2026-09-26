@@ -2,12 +2,6 @@
 
 <suite name="Suite1" verbose="1">
     <test name="Nopackage">
-        <groups>
-            <run>
-                <include name="smoke"/>
-                <exclude name="car"/>
-            </run>
-        </groups>
         <classes>
             <class name="ui_tests.RegistrationTest"/>
             <class name="ui_tests.LoginTests"/>

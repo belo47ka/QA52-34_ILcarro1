@@ -1,13 +1,11 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
+import java.security.Key;
 import java.time.LocalDate;
 
 import static utils.PropertiesReader.*;
@@ -38,6 +36,11 @@ public class Homepage extends Basepage{
     WebElement errorMesWrongDate;
     @FindBy(xpath = "//button[@aria-label='Choose month and year']")
     WebElement btnYearCalendar;
+
+
+    public void  pressEscape(){
+        inputDates.sendKeys(Keys.ESCAPE);
+    }
 
 
     public String noAvailableCarsMethod(){

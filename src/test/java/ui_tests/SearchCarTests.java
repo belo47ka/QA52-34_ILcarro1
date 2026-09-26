@@ -13,11 +13,11 @@ import java.time.LocalDate;
 public class SearchCarTests extends AppManager {
     Homepage homepage;
     SoftAssert softAssert = new SoftAssert();
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void openHomePage(){
         homepage=new Homepage(getDriver());
     }
-    @Test
+    @Test(groups = "smoke")
     public void searchCarPositiveTests(){
         String city = "Haifa";
         LocalDate startDate = LocalDate.now().plusDays(2);
@@ -48,7 +48,7 @@ public class SearchCarTests extends AppManager {
         homepage.submitSearchWithJS();
         Assert.assertTrue(homepage.errorMesWrongDate().contains("Second date must be after first date"));
     }
-    @Test
+    @Test(groups = {"smoke","regress","search","positive"})
     public void searchCarPositiveTests1(){
         String city = "Haifa";
         LocalDate startDate = LocalDate.now().plusDays(2);
@@ -69,6 +69,16 @@ public class SearchCarTests extends AppManager {
         Assert.assertTrue(homepage.isUrlContainsText("results"));
 
 
+    }
+    @Test
+    public void searchCarWithCalendarStartDAteLessThanTodayNegativeTest() {
+        String city = "Haifa";
+        LocalDate startDate = LocalDate.now().minusDays(2);
+        LocalDate endDate = LocalDate.now().plusDays(3);
+        homepage.typeSearchFormWithCalendar(city, startDate, endDate);
+        homepage.pressEscape();
+//        Assert.assertTrue(homepage.isTextInErrorPresent
+//                ("Dates are required"));
     }
 
 
